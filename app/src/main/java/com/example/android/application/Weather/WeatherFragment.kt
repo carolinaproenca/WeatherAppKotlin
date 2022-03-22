@@ -30,8 +30,7 @@ class WeatherFragment : Fragment(){
         binding = WeatherFragmentBinding.inflate(inflater, container, false)
 
         model = ViewModelProvider(this).get(WeatherViewModel::class.java)
-
-
+        
         binding.day1Time.adapter = adapter
 
 
