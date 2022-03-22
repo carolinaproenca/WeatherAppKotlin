@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">OpenWeather</string>
+    <string name="start_text">Hello Hello! Welcome!</string>
+    <string name="next">Next page</string>
+    <string name="day1">Day1</string>
+    <string name="day2">Day2</string>
+    <string name="day3">Day3</string>
+    <string name="day4">Day4</string>
+    <string name="day5">Day5</string>
+</resources>
