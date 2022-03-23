@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.application.databinding.ViewDegreesHoursBinding
+import com.example.android.application.models.Day
 import com.example.android.application.models.Hour
 
 class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.MyviewHolder>() {
 
-    var data = listOf<Hour>()
+    var data = listOf<Day>()
 
     @SuppressLint("NotifyDataSetChanged")
     set(value) {
@@ -29,7 +30,7 @@ class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.MyviewHolder>() {
     }
 
     class MyviewHolder private constructor(private val binding: ViewDegreesHoursBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Hour){
+        fun bind(item: Day){
             binding.hour.text = item.dtTxt
             binding.degrees.text = item.main.temp.toString()
         }

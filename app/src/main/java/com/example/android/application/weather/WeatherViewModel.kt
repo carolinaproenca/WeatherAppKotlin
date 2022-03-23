@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.application.models.Day
 import com.example.android.application.models.Response
+import com.example.android.application.models.WeatherVM
 import com.example.android.application.network.WeatherApi
 
 import kotlinx.coroutines.launch
@@ -17,8 +18,8 @@ class WeatherViewModel : ViewModel(){
 
     private val retrofit = WeatherApi.retrofitService
 
-    private val _response = MutableLiveData<Response>()
-    val response: LiveData<Response>
+    private val _response = MutableLiveData<WeatherVM>()
+    val response: LiveData<WeatherVM>
         get() = _response
 
     val smsError = MutableLiveData<String>()
@@ -30,11 +31,12 @@ class WeatherViewModel : ViewModel(){
             try {
                 val listResult = retrofit.getProperties(city = "Porto", units = "metric")
 
+                val days = mutableListOf<Day>()
+
                 for(item in listResult.list){
-                    val day : DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")
+                    val day : DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                     val parseday : LocalDateTime = LocalDateTime.parse(item.dtTxt, day)
 
-                    val days = mutableListOf<Day>()
                     days[0] = Day(listResult.list,parseday)
 
                     for(i in 0..days.size){
@@ -46,12 +48,10 @@ class WeatherViewModel : ViewModel(){
                         }
                     }
                 }
-                _response.value = listResult
-
+                _response.value = WeatherVM(listResult.city.name, listResult.list[0].main.temp.toString(),days)
             } catch (e: Exception) {
                 smsError.value = "Failure+$e"
             }
         }
     }
-
 }
