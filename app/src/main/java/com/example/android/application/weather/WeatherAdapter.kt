@@ -25,13 +25,21 @@ class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.MyviewHolder>() {
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyviewHolder {
-        return MyviewHolder(ViewDegreesHoursBinding.inflate(LayoutInflater.from(parent.context)))
+        return MyviewHolder.from(parent)
     }
 
-    class MyviewHolder internal constructor(private val binding: ViewDegreesHoursBinding): RecyclerView.ViewHolder(binding.root){
+    class MyviewHolder private constructor(private val binding: ViewDegreesHoursBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(item: Hour){
             binding.hour.text = item.dtTxt
             binding.degrees.text = item.main.temp.toString()
+        }
+
+        companion object{
+            fun from(parent: ViewGroup): MyviewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ViewDegreesHoursBinding.inflate(layoutInflater,parent,false)
+                return MyviewHolder(binding)
+            }
         }
     }
 }
