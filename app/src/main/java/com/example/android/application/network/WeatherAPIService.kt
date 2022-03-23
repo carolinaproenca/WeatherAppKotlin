@@ -1,6 +1,6 @@
 package com.example.android.application.network
 
-import com.example.android.application.models.Json
+import com.example.android.application.models.Response
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -26,7 +26,7 @@ interface WeatherAPIService {
     @GET("forecast")
     suspend fun getProperties(
         @Query("appid") key: String = API, @Query("q") city: String, @Query("units") units: String
-    ): Json
+    ): Response
 
 }
 

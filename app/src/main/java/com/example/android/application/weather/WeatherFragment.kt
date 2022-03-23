@@ -25,8 +25,7 @@ class WeatherFragment : Fragment(){
 
         model = ViewModelProvider(this).get(WeatherViewModel::class.java)
 
-        binding.day1Time.adapter = adapter
-
+        binding.day1weather.adapter = adapter
 
         model.getWeatherProperties()
 

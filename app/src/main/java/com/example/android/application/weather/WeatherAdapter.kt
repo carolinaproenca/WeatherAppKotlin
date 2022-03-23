@@ -2,11 +2,9 @@ package com.example.android.application.weather
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.application.R
+import com.example.android.application.databinding.ViewDegreesHoursBinding
 import com.example.android.application.models.Hour
 
 class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.MyviewHolder>() {
@@ -23,50 +21,18 @@ class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.MyviewHolder>() {
 
     override fun onBindViewHolder(holder: MyviewHolder, position: Int) {
         val item = data[position]
-        //holder.bind(item)
-        holder.hour.text = item.dtTxt
-        holder.degrees.text = item.main.temp.toString()
-    }
+        holder.bind(item)
 
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyviewHolder {
-        return MyviewHolder.from(parent)
+        return MyviewHolder(ViewDegreesHoursBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    class MyviewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView){
-        val hour: TextView = itemView.findViewById(R.id.hour)
-        val degrees: TextView = itemView.findViewById(R.id.degrees)
-        companion object {
-            fun from(parent: ViewGroup): MyviewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater
-                    .inflate(R.layout.view_degrees_hours, parent, false)
-
-                return MyviewHolder(view)
-            }
+    class MyviewHolder internal constructor(private val binding: ViewDegreesHoursBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(item: Hour){
+            binding.hour.text = item.dtTxt
+            binding.degrees.text = item.main.temp.toString()
         }
     }
-
-    /* class MyviewHolder private constructor(val binding: WeatherFragmentBinding): RecyclerView.ViewHolder(binding.root){
-     val hour: TextView = itemView.findViewById(R.id.hour)
-     val degrees: TextView = itemView.findViewById(R.id.degrees)
-
-     fun bind(item : Hour) {
-         binding.day1Time = item.dtTxt
-     }
-
-
-     companion object {
-         fun from(parent: ViewGroup): MyviewHolder {
-             val layoutInflater = LayoutInflater.from(parent.context)
-             val view = layoutInflater
-                 .inflate(R.layout.view_degrees_hours, parent, false)
-
-             return MyviewHolder(view)
-         }
-     }
- }*/
-
-
-
 }
 

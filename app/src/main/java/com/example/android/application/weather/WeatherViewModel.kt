@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.android.application.models.Json
+import com.example.android.application.models.Response
 import com.example.android.application.network.WeatherApi
 
 import kotlinx.coroutines.launch
@@ -13,8 +13,8 @@ class WeatherViewModel : ViewModel(){
 
     private val retrofit = WeatherApi.retrofitService
 
-    private val _response = MutableLiveData<Json>()
-    val response: LiveData<Json>
+    private val _response = MutableLiveData<Response>()
+    val response: LiveData<Response>
         get() = _response
 
     val smsError = MutableLiveData<String>()
