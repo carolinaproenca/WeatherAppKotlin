@@ -16,7 +16,7 @@ private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
 
-//construtor retrofit
+//constructor retrofit
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(URL)
@@ -24,13 +24,13 @@ private val retrofit = Retrofit.Builder()
 
 interface WeatherAPIService {
     @GET("forecast")
-    suspend fun getPropertires(
+    suspend fun getProperties(
         @Query("appid") key: String = API, @Query("q") city: String, @Query("units") units: String
     ): Json
 
 }
 
-//inicializar o serviço RETROFIT
+//initialize service RETROFIT
 object WeatherApi {
     val retrofitService: WeatherAPIService by lazy {
         retrofit.create(WeatherAPIService::class.java)
