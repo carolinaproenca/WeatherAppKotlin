@@ -22,8 +22,8 @@ class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.MyviewHolder>() {
     override fun onBindViewHolder(holder: MyviewHolder, position: Int) {
         val item = data[position]
         holder.bind(item)
-
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyviewHolder {
         return MyviewHolder.from(parent)
     }
