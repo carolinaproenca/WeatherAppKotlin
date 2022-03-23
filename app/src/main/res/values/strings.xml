@@ -7,4 +7,6 @@
     <string name="day3">Day3</string>
     <string name="day4">Day4</string>
     <string name="day5">Day5</string>
+    <string name="weather">17.ºC</string>
+    <string name="city">Lisboa</string>
 </resources>

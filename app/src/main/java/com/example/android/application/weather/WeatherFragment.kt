@@ -40,7 +40,8 @@ class WeatherFragment : Fragment(){
             Log.d("Ola", "Ola$error")
         }
         model.response.observe(this){ item ->
-            binding.grafico.text = item.city.name
+            binding.city.text = item.city.name
+            binding.currentWeather.text = item.list[0].main.temp.toString()
             Log.d("Ola", "Ola" +item.city)
             adapter.data = item.list
         }

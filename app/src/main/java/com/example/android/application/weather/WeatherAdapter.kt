@@ -25,7 +25,7 @@ class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.MyviewHolder>() {
         val item = data[position]
         //holder.bind(item)
         holder.hour.text = item.dtTxt
-        holder.degrees.text = item.dtTxt
+        holder.degrees.text = item.main.temp.toString()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyviewHolder {
@@ -35,9 +35,6 @@ class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.MyviewHolder>() {
     class MyviewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView){
         val hour: TextView = itemView.findViewById(R.id.hour)
         val degrees: TextView = itemView.findViewById(R.id.degrees)
-
-
-
         companion object {
             fun from(parent: ViewGroup): MyviewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -49,20 +46,25 @@ class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.MyviewHolder>() {
         }
     }
 
-/*  class MyviewHolder private constructor(val binding: WeatherFragmentBinding) : RecyclerView.ViewHolder(binding.root){
-         fun bind(item: Day){
-             binding.day1Time = item.hours
-         }
-         companion object {
-             fun from(parent: ViewGroup): MyviewHolder {
-                 val layoutInflater = LayoutInflater.from(parent.context)
-                 val view = layoutInflater
-                     .inflate(R.layout.view_degrees_hours, parent, false)
+    /* class MyviewHolder private constructor(val binding: WeatherFragmentBinding): RecyclerView.ViewHolder(binding.root){
+     val hour: TextView = itemView.findViewById(R.id.hour)
+     val degrees: TextView = itemView.findViewById(R.id.degrees)
 
-                 return MyviewHolder(view)
-             }
+     fun bind(item : Hour) {
+         binding.day1Time = item.dtTxt
+     }
+
+
+     companion object {
+         fun from(parent: ViewGroup): MyviewHolder {
+             val layoutInflater = LayoutInflater.from(parent.context)
+             val view = layoutInflater
+                 .inflate(R.layout.view_degrees_hours, parent, false)
+
+             return MyviewHolder(view)
          }
-    }*/
+     }
+ }*/
 
 
 
