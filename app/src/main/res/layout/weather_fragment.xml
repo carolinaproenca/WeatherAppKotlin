@@ -83,18 +83,6 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-
-        <TextView
-            android:id="@+id/day1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/day1"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="0dp" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/day1weather"
             android:layout_width="match_parent"
@@ -104,8 +92,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/day1" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

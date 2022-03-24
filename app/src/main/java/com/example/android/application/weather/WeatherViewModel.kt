@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.application.models.Day
+import com.example.android.application.models.Hour
 import com.example.android.application.models.Response
 import com.example.android.application.models.WeatherVM
 import com.example.android.application.network.WeatherApi
@@ -32,23 +33,22 @@ class WeatherViewModel : ViewModel(){
                 val listResult = retrofit.getProperties(city = "Porto", units = "metric")
 
                 val days = mutableListOf<Day>()
+                val arrayhour = arrayOf<Hour>()
 
-                for(item in listResult.list){
+            /*    arrayhour[0] = listResult.list
+
+                for(i in 0..arrayhour.size){
+
                     val day : DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                    val parseday : LocalDateTime = LocalDateTime.parse(item.dtTxt, day)
+                    val parseday : LocalDateTime = LocalDateTime.parse(listResult.list[i].dtTxt, day)
 
-                    days[0] = Day(listResult.list,parseday)
+                    if(arrayhour[i-1] != arrayhour[i])
+                        Day(arrayhour[i],parseday)
 
-                    for(i in 0..days.size){
-                        if(days[i] == days[i-1]){
-                            days.add(i,Day(listResult.list, parseday))
-                        }
-                        else{
-                            Day(listResult.list,parseday)
-                        }
-                    }
-                }
+                }*/
+
                 _response.value = WeatherVM(listResult.city.name, listResult.list[0].main.temp.toString(),days)
+
             } catch (e: Exception) {
                 smsError.value = "Failure+$e"
             }
