@@ -1,6 +1,7 @@
 package com.example.android.application.weather
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,7 +28,6 @@ class WeatherViewModel : ViewModel(){
     //call web service
     fun getWeatherProperties(){
         viewModelScope.launch {
-
             try {
                 val listResult = retrofit.getProperties(city = "Porto", units = "metric")
 
@@ -35,15 +35,19 @@ class WeatherViewModel : ViewModel(){
                 val arrayhour = arrayListOf<Hour>()
 
                 for(i in listResult.list.indices){
-
                     when {
                         i == 0 -> { //add first hour to array
                             arrayhour.add(listResult.list[i])
                         }
-                        getData(listResult.list[i-1].dtTxt) != getData(listResult.list[i].dtTxt) -> { // create a new day because the hour is different and is not the same day
-                            days.add(Day(arrayhour.clone() as List<Hour>,day(listResult.list[i-1].dtTxt)))
+                        getData(listResult.list[i - 1].dtTxt) != getData(listResult.list[i].dtTxt) -> { // create a new day because the hour is different and is not the same day
+                            days.add(
+                                Day(
+                                    arrayhour.clone() as List<Hour>,
+                                    day(listResult.list[i - 1].dtTxt)
+                                )
+                            )
                             arrayhour.clear()
-                            arrayhour.add(arrayhour[i])
+                            arrayhour.add(listResult.list[i])
                         }
                         else -> { //date equals
                             arrayhour.add(listResult.list[i])
