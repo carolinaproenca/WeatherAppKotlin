@@ -11,6 +11,7 @@ import com.example.android.application.models.WeatherVM
 import com.example.android.application.network.WeatherApi
 
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -36,24 +37,21 @@ WeatherViewModel : ViewModel(){
             try {
                 val listResult = retrofit.getProperties(city = "Porto", units = "metric")
 
-                var days = mutableListOf<Day>()
+                val days = mutableListOf<Day>()
                 val arrayhour = arrayListOf<Hour>()
 
-                //days = listResult.list[0]
-                arrayhour[0] = listResult.list[0]
+                for(i in listResult.list.indices){
 
-                for(i in 0..arrayhour.size){
-
-                    val day = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                    val parseday = LocalDateTime.parse(listResult.list[i].dtTxt, day)
-
-                    if(getData() == parseday) // se o dia em que temos guardado (getData()) é igual ao dia que recebemos
-                        arrayhour.add(arrayhour[i]) // adicionamos ao array das horas a hora
-                    else// senão vamos criar um novo dia ao array de dias com a hora que temos e com o dia que recebemos
-                        days.add(Day(arrayhour,parseday))
-
+                    if(i == 0){ // adicionar a primeira hora ao array auxiliar de horas
+                        arrayhour.add(listResult.list[i])
+                    }else if(getData(listResult.list[i-1].dtTxt) != getData(listResult.list[i].dtTxt)){ // criar um novo dia pq a hora ja nao é do mesmo dia
+                        days.add(Day(arrayhour.clone() as List<Hour>,day(listResult.list[i-1].dtTxt)))
+                        arrayhour.clear()
+                        arrayhour.add(arrayhour[i])
+                    }else{ //datas sao iguais
+                        arrayhour.add(listResult.list[i])
+                    }
                 }
-
                 _response.value = WeatherVM(listResult.city.name, listResult.list[0].main.temp.toString(),days)
 
             } catch (e: Exception) {
@@ -62,10 +60,16 @@ WeatherViewModel : ViewModel(){
         }
     }
 
-    fun getData(){ // ver aqui qual é o dia em que estamos
-        val day = Day()
-        val currentDay
-        day.date = currentDay
-        return currentDay
+    fun getData(stringdate: String): Int { // ver aqui qual é o dia em que estamos
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        val date = format.parse(stringdate)
+        return date.date
     }
+
+    fun day(stringdate: String): Date{
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        val day = format.parse(stringdate)
+        return day
+    }
+
 }
