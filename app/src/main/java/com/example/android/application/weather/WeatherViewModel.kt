@@ -1,26 +1,20 @@
 package com.example.android.application.weather
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.application.models.Day
 import com.example.android.application.models.Hour
-import com.example.android.application.models.Response
 import com.example.android.application.models.WeatherVM
 import com.example.android.application.network.WeatherApi
 
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
-class
-
-
-WeatherViewModel : ViewModel(){
+class WeatherViewModel : ViewModel(){
 
     private val retrofit = WeatherApi.retrofitService
 
@@ -42,14 +36,18 @@ WeatherViewModel : ViewModel(){
 
                 for(i in listResult.list.indices){
 
-                    if(i == 0){ // adicionar a primeira hora ao array auxiliar de horas
-                        arrayhour.add(listResult.list[i])
-                    }else if(getData(listResult.list[i-1].dtTxt) != getData(listResult.list[i].dtTxt)){ // criar um novo dia pq a hora ja nao é do mesmo dia
-                        days.add(Day(arrayhour.clone() as List<Hour>,day(listResult.list[i-1].dtTxt)))
-                        arrayhour.clear()
-                        arrayhour.add(arrayhour[i])
-                    }else{ //datas sao iguais
-                        arrayhour.add(listResult.list[i])
+                    when {
+                        i == 0 -> { //add first hour to array
+                            arrayhour.add(listResult.list[i])
+                        }
+                        getData(listResult.list[i-1].dtTxt) != getData(listResult.list[i].dtTxt) -> { // create a new day because the hour is different and is not the same day
+                            days.add(Day(arrayhour.clone() as List<Hour>,day(listResult.list[i-1].dtTxt)))
+                            arrayhour.clear()
+                            arrayhour.add(arrayhour[i])
+                        }
+                        else -> { //date equals
+                            arrayhour.add(listResult.list[i])
+                        }
                     }
                 }
                 _response.value = WeatherVM(listResult.city.name, listResult.list[0].main.temp.toString(),days)
@@ -60,13 +58,15 @@ WeatherViewModel : ViewModel(){
         }
     }
 
-    fun getData(stringdate: String): Int { // ver aqui qual é o dia em que estamos
+    @SuppressLint("SimpleDateFormat")
+    private fun getData(stringdate: String): Int {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
         val date = format.parse(stringdate)
         return date.date
     }
 
-    fun day(stringdate: String): Date{
+    @SuppressLint("SimpleDateFormat")
+    private fun day(stringdate: String): Date{
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
         val day = format.parse(stringdate)
         return day

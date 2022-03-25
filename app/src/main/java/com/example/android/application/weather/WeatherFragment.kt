@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.application.databinding.WeatherFragmentBinding
+import com.example.android.application.models.Day
 
 class WeatherFragment : Fragment(){
 
     private lateinit var binding: WeatherFragmentBinding
     private lateinit var model : WeatherViewModel
     private val adapter by lazy{ WeatherAdapter() }
+
+    private val date = ArrayList<Day>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +29,7 @@ class WeatherFragment : Fragment(){
         model = ViewModelProvider(this).get(WeatherViewModel::class.java)
 
         binding.day1weather.adapter = adapter
+        adapter.setDate(date)
 
         model.getWeatherProperties()
 
@@ -42,7 +46,7 @@ class WeatherFragment : Fragment(){
             binding.city.text = item.name
             binding.currentWeather.text = item.current
             Log.d("Ola", "Ola" +item.name)
-            adapter.data = item.days
+            adapter.data = item.days as ArrayList<Day>
         }
     }
 
