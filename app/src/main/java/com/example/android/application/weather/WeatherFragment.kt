@@ -13,7 +13,6 @@ import com.example.android.application.models.Day
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import kotlinx.android.synthetic.main.weather_fragment.*
 
 class WeatherFragment : Fragment(){
 
@@ -22,7 +21,7 @@ class WeatherFragment : Fragment(){
     private val adapter by lazy{ WeatherAdapter() }
 
     private val date = ArrayList<Day>()
-    private lateinit var linelist : ArrayList<Entry>
+    private val linelist = ArrayList<Entry>()
     private lateinit var lineDataSet : LineDataSet
     private lateinit var lineData : LineData
 
@@ -37,7 +36,7 @@ class WeatherFragment : Fragment(){
         model = ViewModelProvider(this).get(WeatherViewModel::class.java)
 
         binding.day1weather.adapter = adapter
-        adapter.setDate(date)
+
 
         model.getWeatherProperties()
 
@@ -55,12 +54,14 @@ class WeatherFragment : Fragment(){
             binding.city.text = item.name
             binding.currentWeather.text = item.current
             Log.d("Ola", "Ola" +item.name)
-            adapter.data = item.days as ArrayList<Day>
+            adapter.submitList(item.days)
+            //adapter.data = item.days as ArrayList<Day>
 
+            linelist.add((Entry(model.getHour(1).toFloat(),model.getDegree(1).toFloat())))
         }
     }
 
-     fun configureLineChart(){
+     private fun configureLineChart(){
 
         //Entry(first hours and second degrees)
         /*linelist.add((Entry(model.getHour(0).toFloat(), model.getDegree(0).toFloat())))
@@ -85,10 +86,9 @@ class WeatherFragment : Fragment(){
         lineDataSet.color = R.color.purple_200
         lineDataSet.circleRadius = 5f
 
-         lineChart.data = LineData(lineDataSet)
-
-         lineChart.setTouchEnabled(true)
-         lineChart.setPinchZoom(true)
+         binding.lineChart.data = LineData(lineDataSet)
+         binding.lineChart.setTouchEnabled(true)
+         binding.lineChart.setPinchZoom(true)
 
         //connect to UI
          lineData = LineData(lineDataSet)

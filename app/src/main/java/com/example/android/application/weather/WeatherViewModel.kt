@@ -18,9 +18,12 @@ class WeatherViewModel : ViewModel(){
 
     private val retrofit = WeatherApi.retrofitService
 
-    private val _response = MutableLiveData<WeatherVM>()
+    private val
+            = MutableLiveData<WeatherVM>()
     val response: LiveData<WeatherVM>
         get() = _response
+
+
 
     val smsError = MutableLiveData<String>()
 
@@ -54,6 +57,7 @@ class WeatherViewModel : ViewModel(){
                         }
                     }
                 }
+                // TODO:`MAP response to Weather state
                 _response.value = WeatherVM(listResult.city.name, listResult.list[0].main.temp.toString(),days)
             } catch (e: Exception) {
                 smsError.value = "Failure+$e"
