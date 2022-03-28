@@ -1,7 +1,6 @@
 package com.example.android.application.weather
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,6 +33,7 @@ class WeatherViewModel : ViewModel(){
                 val days = mutableListOf<Day>()
                 val arrayhour = arrayListOf<Hour>()
 
+
                 for(i in listResult.list.indices){
                     when {
                         i == 0 -> { //add first hour to array
@@ -55,7 +55,6 @@ class WeatherViewModel : ViewModel(){
                     }
                 }
                 _response.value = WeatherVM(listResult.city.name, listResult.list[0].main.temp.toString(),days)
-
             } catch (e: Exception) {
                 smsError.value = "Failure+$e"
             }
@@ -70,10 +69,19 @@ class WeatherViewModel : ViewModel(){
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun day(stringdate: String): Date{
+    private fun day(stringdate: String): Date {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
-        val day = format.parse(stringdate)
-        return day
+        return format.parse(stringdate)
+    }
+
+    suspend fun getDegree(indice: Int): Double {
+        val listResult = retrofit.getProperties(city = "Porto", units = "metric")
+        return listResult.list[indice].main.temp
+    }
+
+    suspend fun getHour(indice: Int): String {
+        val listResult = retrofit.getProperties(city = "Porto", units = "metric")
+        return listResult.list[indice].dtTxt
     }
 
 }
