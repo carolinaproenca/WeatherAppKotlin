@@ -51,18 +51,9 @@ class WeatherFragment : Fragment(){
             binding.currentWeather.text = item.current
             Log.d("Ola", "Ola" +item.name)
             adapter.submitList(item.days)
-            //adapter.data = item.days as ArrayList<Day>
-
-           /* for(i in item.entryhour.indices){
-                linelist.add(Entry(item.entryhour[i].toFloat(), item.entrydegrees[i].toFloat()))
-            }*/
 
             linelist = item.entries
-           /* linelist.add(Entry(10f, 20f))
-            linelist.add(Entry(20f, 30f))
-            linelist.add(Entry(40f, 50f))
-            linelist.add(Entry(60f, 70f))
-            linelist.add(Entry(80f, 90f))*/
+
             lineDataSet = LineDataSet(linelist, "Weather")
 
             lineDataSet.color = R.color.purple_200

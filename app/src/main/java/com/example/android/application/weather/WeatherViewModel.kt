@@ -63,8 +63,8 @@ class WeatherViewModel : ViewModel(){
                     if(firstday) {
                         linelist.add(
                             Entry(
-                                listResult.list[i].main.temp.toFloat(),
-                                getData(listResult.list[i].dtTxt).toFloat()
+                                getData(listResult.list[i].dtTxt).toFloat(),
+                                listResult.list[i].main.temp.toFloat()
                             )
                         )
                     }
@@ -90,14 +90,4 @@ class WeatherViewModel : ViewModel(){
         return format.parse(stringdate)
     }
 
- /*   suspend fun getDegree(indice: Int): Double {
-        val listResult = retrofit.getProperties(city = "Porto", units = "metric")
-        return listResult.list[indice].main.temp
-    }
-
-    suspend fun getHour(indice: Int): String {
-        val listResult = retrofit.getProperties(city = "Porto", units = "metric")
-        return listResult.list[indice].dtTxt
-    }
-*/
 }

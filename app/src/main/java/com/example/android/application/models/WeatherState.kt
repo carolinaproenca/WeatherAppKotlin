@@ -7,8 +7,6 @@ import com.github.mikephil.charting.data.Entry
 data class WeatherState(
     val name: String,
     val current: String,
-  //  val entryhour : ArrayList<Int>,
-   // val entrydegrees : ArrayList<Int>,
     val entries: ArrayList<Entry>,
     val days: List<Day>)
 //  TODO Add list of entries
