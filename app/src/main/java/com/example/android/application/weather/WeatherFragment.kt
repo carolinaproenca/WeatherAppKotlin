@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.application.R
 import com.example.android.application.databinding.WeatherFragmentBinding
-import com.example.android.application.models.Day
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -20,8 +19,7 @@ class WeatherFragment : Fragment(){
     private lateinit var model : WeatherViewModel
     private val adapter by lazy{ WeatherAdapter() }
 
-    private val date = ArrayList<Day>()
-    private val linelist = ArrayList<Entry>()
+    private var linelist = ArrayList<Entry>()
     private lateinit var lineDataSet : LineDataSet
     private lateinit var lineData : LineData
 
@@ -40,8 +38,6 @@ class WeatherFragment : Fragment(){
 
         model.getWeatherProperties()
 
-        configureLineChart()
-
         return binding.root
     }
 
@@ -57,41 +53,28 @@ class WeatherFragment : Fragment(){
             adapter.submitList(item.days)
             //adapter.data = item.days as ArrayList<Day>
 
-            linelist.add((Entry(model.getHour(1).toFloat(),model.getDegree(1).toFloat())))
+           /* for(i in item.entryhour.indices){
+                linelist.add(Entry(item.entryhour[i].toFloat(), item.entrydegrees[i].toFloat()))
+            }*/
+
+            linelist = item.entries
+           /* linelist.add(Entry(10f, 20f))
+            linelist.add(Entry(20f, 30f))
+            linelist.add(Entry(40f, 50f))
+            linelist.add(Entry(60f, 70f))
+            linelist.add(Entry(80f, 90f))*/
+            lineDataSet = LineDataSet(linelist, "Weather")
+
+            lineDataSet.color = R.color.purple_200
+            lineDataSet.circleRadius = 5f
+
+            binding.lineChart.data = LineData(lineDataSet)
+
+            //connect to UI
+            lineData = LineData(lineDataSet)
+            binding.lineChart.data = lineData
         }
     }
 
-     private fun configureLineChart(){
-
-        //Entry(first hours and second degrees)
-        /*linelist.add((Entry(model.getHour(0).toFloat(), model.getDegree(0).toFloat())))
-        linelist.add((Entry(model.getHour(1).toFloat(),model.getDegree(1).toFloat())))
-        linelist.add((Entry(model.getHour(2).toFloat(),model.getDegree(2).toFloat())))
-        linelist.add((Entry(model.getHour(3).toFloat(),model.getDegree(3).toFloat())))
-        linelist.add((Entry(model.getHour(4).toFloat(),model.getDegree(4).toFloat())))
-        linelist.add((Entry(model.getHour(5).toFloat(),model.getDegree(5).toFloat())))
-        linelist.add((Entry(model.getHour(6).toFloat(),model.getDegree(6).toFloat())))
-        linelist.add((Entry(model.getHour(7).toFloat(),model.getDegree(7).toFloat())))*/
-        linelist.add(Entry(20f, 0.0F))
-        linelist.add(Entry(30f, 3.0F))
-        linelist.add(Entry(40f, 2.0F))
-        linelist.add(Entry(50f, 1.0F))
-        linelist.add(Entry(60f, 8.0F))
-        linelist.add(Entry(70f, 10.0F))
-        linelist.add(Entry(80f, 1.0F))
-
-      //list of properties and name
-        lineDataSet = LineDataSet(linelist, "Test")
-
-        lineDataSet.color = R.color.purple_200
-        lineDataSet.circleRadius = 5f
-
-         binding.lineChart.data = LineData(lineDataSet)
-         binding.lineChart.setTouchEnabled(true)
-         binding.lineChart.setPinchZoom(true)
-
-        //connect to UI
-         lineData = LineData(lineDataSet)
-         binding.lineChart.data = lineData
-    }
 }
+

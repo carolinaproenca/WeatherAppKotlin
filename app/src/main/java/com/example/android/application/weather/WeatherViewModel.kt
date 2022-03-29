@@ -7,20 +7,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.application.models.Day
 import com.example.android.application.models.Hour
-import com.example.android.application.models.WeatherVM
+import com.example.android.application.models.WeatherState
 import com.example.android.application.network.WeatherApi
+import com.github.mikephil.charting.data.Entry
 
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class WeatherViewModel : ViewModel(){
 
     private val retrofit = WeatherApi.retrofitService
 
-    private val
-            = MutableLiveData<WeatherVM>()
-    val response: LiveData<WeatherVM>
+    private val _response= MutableLiveData<WeatherState>()
+    val response: LiveData<WeatherState>
         get() = _response
 
 
@@ -35,14 +36,17 @@ class WeatherViewModel : ViewModel(){
 
                 val days = mutableListOf<Day>()
                 val arrayhour = arrayListOf<Hour>()
-
+                val linelist = ArrayList<Entry>()
+                var firstday = false
 
                 for(i in listResult.list.indices){
                     when {
                         i == 0 -> { //add first hour to array
                             arrayhour.add(listResult.list[i])
+                            firstday = true
                         }
                         getData(listResult.list[i - 1].dtTxt) != getData(listResult.list[i].dtTxt) -> { // create a new day because the hour is different and is not the same day
+                            firstday = false
                             days.add(
                                 Day(
                                     arrayhour.clone() as List<Hour>,
@@ -56,9 +60,17 @@ class WeatherViewModel : ViewModel(){
                             arrayhour.add(listResult.list[i])
                         }
                     }
+                    if(firstday) {
+                        linelist.add(
+                            Entry(
+                                listResult.list[i].main.temp.toFloat(),
+                                getData(listResult.list[i].dtTxt).toFloat()
+                            )
+                        )
+                    }
                 }
                 // TODO:`MAP response to Weather state
-                _response.value = WeatherVM(listResult.city.name, listResult.list[0].main.temp.toString(),days)
+                _response.value = WeatherState(listResult.city.name, listResult.list[0].main.temp.toString(),linelist,days)
             } catch (e: Exception) {
                 smsError.value = "Failure+$e"
             }
@@ -78,7 +90,7 @@ class WeatherViewModel : ViewModel(){
         return format.parse(stringdate)
     }
 
-    suspend fun getDegree(indice: Int): Double {
+ /*   suspend fun getDegree(indice: Int): Double {
         val listResult = retrofit.getProperties(city = "Porto", units = "metric")
         return listResult.list[indice].main.temp
     }
@@ -87,5 +99,5 @@ class WeatherViewModel : ViewModel(){
         val listResult = retrofit.getProperties(city = "Porto", units = "metric")
         return listResult.list[indice].dtTxt
     }
-
+*/
 }
