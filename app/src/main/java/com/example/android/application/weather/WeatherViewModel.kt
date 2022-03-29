@@ -24,11 +24,10 @@ class WeatherViewModel : ViewModel(){
     val response: LiveData<WeatherState>
         get() = _response
 
-
-
     val smsError = MutableLiveData<String>()
 
     //call web service
+    @Suppress("UNCHECKED_CAST")
     fun getWeatherProperties(){
         viewModelScope.launch {
             try {
@@ -63,7 +62,7 @@ class WeatherViewModel : ViewModel(){
                     if(firstday) {
                         linelist.add(
                             Entry(
-                                getData(listResult.list[i].dtTxt).toFloat(),
+                                getData(listResult.list[i].dtTxt)!!.toFloat(),
                                 listResult.list[i].main.temp.toFloat()
                             )
                         )
@@ -78,16 +77,16 @@ class WeatherViewModel : ViewModel(){
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun getData(stringdate: String): Int {
+    private fun getData(stringdate: String): Int? {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
         val date = format.parse(stringdate)
-        return date.date
+        return date?.date
     }
 
     @SuppressLint("SimpleDateFormat")
     private fun day(stringdate: String): Date {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
-        return format.parse(stringdate)
+        return format.parse(stringdate)!!
     }
 
 }

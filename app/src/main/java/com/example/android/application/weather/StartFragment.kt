@@ -18,7 +18,7 @@ class StartFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = StartFragmentBinding.inflate(inflater, container, false)
 
         binding.nextButton.setOnClickListener {

@@ -2,12 +2,10 @@ package com.example.android.application.weather
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.Nullable
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.application.databinding.ViewDegreesHoursBinding
-import com.example.android.application.models.Day
 import com.example.android.application.models.Hour
 
 class HoursAdapter : ListAdapter<Hour, RecyclerView.ViewHolder>(DiffCallbackAdapter()) {

@@ -65,7 +65,8 @@
             android:id="@+id/lineChart"
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:layout_margin="17dp"/>
+            android:layout_margin="17dp"
+            android:background="@color/white"/>
 
 
     </LinearLayout>
