@@ -69,6 +69,5 @@ dependencies {
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.9.3")
 
 
-
 }
 

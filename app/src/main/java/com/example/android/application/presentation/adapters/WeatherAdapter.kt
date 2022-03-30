@@ -1,4 +1,4 @@
-package com.example.android.application.weather
+package com.example.android.application.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,16 +6,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.application.databinding.RvhoursBinding
-import com.example.android.application.models.Day
+import com.example.android.application.domain.model.Day
 
-class WeatherAdapter : ListAdapter<Day ,RecyclerView.ViewHolder>(DiffCallback()) {
+class WeatherAdapter : ListAdapter<Day,RecyclerView.ViewHolder>(DiffCallback()) {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
         (holder as MyviewHolder).bind(item)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MyviewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : MyviewHolder {
         return MyviewHolder.from(parent)
     }
 

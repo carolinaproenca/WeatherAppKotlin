@@ -1,4 +1,4 @@
-package com.example.android.application.weather
+package com.example.android.application.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.application.databinding.ViewDegreesHoursBinding
-import com.example.android.application.models.Hour
+import com.example.android.application.data.remote.dto.Hour
 
 class HoursAdapter : ListAdapter<Hour, RecyclerView.ViewHolder>(DiffCallbackAdapter()) {
 
@@ -25,7 +25,7 @@ class HoursAdapter : ListAdapter<Hour, RecyclerView.ViewHolder>(DiffCallbackAdap
             binding.degrees.text = item.main.temp.toString()
         }
         companion object{
-            fun from(parent: ViewGroup) : ViewHolder{
+            fun from(parent: ViewGroup) : ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ViewDegreesHoursBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)

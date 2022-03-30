@@ -1,4 +1,4 @@
-package com.example.android.application.models
+package com.example.android.application.data.remote.dto
 import com.squareup.moshi.Json
 
 data class Coord(
