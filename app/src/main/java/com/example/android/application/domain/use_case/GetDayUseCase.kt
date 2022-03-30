@@ -7,12 +7,12 @@ import com.github.mikephil.charting.data.Entry
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GetDayUseCase(){
+class GetDayUseCase{
 
     private val days = mutableListOf<Day>()
     private val arrayhour = arrayListOf<Hour>()
     private val linelist = ArrayList<Entry>()
-    var firstday = false
+    private var firstday = false
 
     fun getDay(hour: List<Hour>): List<Day> {
 

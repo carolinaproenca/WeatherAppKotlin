@@ -16,7 +16,7 @@ private val moshi = Moshi.Builder()
     .build()
 
 //constructor retrofit
-val retrofit = Retrofit.Builder()
+private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(URL)
     .build()
