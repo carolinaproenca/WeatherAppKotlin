@@ -7,7 +7,7 @@ import com.github.mikephil.charting.data.Entry
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GetDayUseCase{
+class GetDayUseCase(){
 
     private val days = mutableListOf<Day>()
     private val arrayhour = arrayListOf<Hour>()
