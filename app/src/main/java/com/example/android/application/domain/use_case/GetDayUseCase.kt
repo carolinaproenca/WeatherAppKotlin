@@ -3,11 +3,14 @@ package com.example.android.application.domain.use_case
 import android.annotation.SuppressLint
 import com.example.android.application.data.remote.dto.Hour
 import com.example.android.application.domain.model.Day
+//import com.example.android.application.domain.repository.domainRepository
 import com.github.mikephil.charting.data.Entry
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GetDayUseCase{
+class GetDayUseCase /*constructor(private val repository: domainRepository)*/{
+
+   // suspend fun getProp() = repository.getProp()
 
     private val days = mutableListOf<Day>()
     private val arrayhour = arrayListOf<Hour>()

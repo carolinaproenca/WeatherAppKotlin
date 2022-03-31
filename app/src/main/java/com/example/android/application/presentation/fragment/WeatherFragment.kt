@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.application.R
+import com.example.android.application.WeatherApplication
+import com.example.android.application.WeatherContainer
 import com.example.android.application.databinding.WeatherFragmentBinding
 import com.example.android.application.presentation.adapters.WeatherAdapter
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+
 
 class WeatherFragment : Fragment(){
 
@@ -24,6 +27,8 @@ class WeatherFragment : Fragment(){
     private lateinit var lineDataSet : LineDataSet
     private lateinit var lineData : LineData
 
+   // private lateinit var appContainer: WeatherContainer
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,10 +37,12 @@ class WeatherFragment : Fragment(){
 
         binding = WeatherFragmentBinding.inflate(inflater, container, false)
 
+       // appContainer = (application as WeatherApplication).appContainer
+       // appContainer.weatherContainer = WeatherContainer(appContainer.repository)
+
         model = ViewModelProvider(this).get(WeatherViewModel::class.java)
 
         binding.day1weather.adapter = adapter
-
 
         model.getWeatherProperties()
 
@@ -66,6 +73,11 @@ class WeatherFragment : Fragment(){
             lineData = LineData(lineDataSet)
             binding.lineChart.data = lineData
         }
+    }
+
+    override fun onDestroy() {
+        //appContainer.weatherContainer = null
+        super.onDestroy()
     }
 
 }
