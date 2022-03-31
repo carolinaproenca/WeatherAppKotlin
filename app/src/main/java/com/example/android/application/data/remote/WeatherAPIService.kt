@@ -16,10 +16,10 @@ private val moshi = Moshi.Builder()
     .build()
 
 //constructor retrofit
-private val retrofit = Retrofit.Builder()
+val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(URL)
-    .build()
+    .build()!!
 
 interface WeatherAPIService {
     @GET("forecast")

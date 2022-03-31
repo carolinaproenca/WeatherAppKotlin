@@ -1,5 +1,6 @@
 package com.example.android.application.presentation.fragment
 
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.android.application.AppContainer
 import com.example.android.application.R
 import com.example.android.application.WeatherApplication
 import com.example.android.application.WeatherContainer
@@ -17,7 +19,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 
 
-class WeatherFragment : Fragment(){
+abstract class WeatherFragment : Fragment(){
 
     private lateinit var binding: WeatherFragmentBinding
     private lateinit var model : WeatherViewModel
@@ -27,7 +29,8 @@ class WeatherFragment : Fragment(){
     private lateinit var lineDataSet : LineDataSet
     private lateinit var lineData : LineData
 
-   // private lateinit var appContainer: WeatherContainer
+    //abstract val application : Application
+    private lateinit var appContainer: AppContainer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +40,8 @@ class WeatherFragment : Fragment(){
 
         binding = WeatherFragmentBinding.inflate(inflater, container, false)
 
-       // appContainer = (application as WeatherApplication).appContainer
-       // appContainer.weatherContainer = WeatherContainer(appContainer.repository)
+        appContainer = (application as WeatherApplication).appContainer
+        appContainer.weatherContainer = WeatherContainer(appContainer.repository)
 
         model = ViewModelProvider(this).get(WeatherViewModel::class.java)
 
@@ -76,7 +79,7 @@ class WeatherFragment : Fragment(){
     }
 
     override fun onDestroy() {
-        //appContainer.weatherContainer = null
+        appContainer.weatherContainer = null
         super.onDestroy()
     }
 

@@ -1,15 +1,18 @@
 package com.example.android.application
 
 import com.example.android.application.data.remote.WeatherAPIService
+import com.example.android.application.data.remote.retrofit
 import com.example.android.application.data.repository.WeatherRepository
 
 class AppContainer {
-    //API
 
-    //Repository
-    //val repository = WeatherRepository(retrofit)
+    private val retrofitService: WeatherAPIService by lazy {
+        retrofit.create(WeatherAPIService::class.java)
+    }
+    val repository = WeatherRepository(retrofitService)
 
-    //WeatherContainer
-    val weatherContainer : WeatherContainer ?=null
+    val weatherViewModelFactory = WeatherRepository(retrofitService)
+
+    var weatherContainer : WeatherContainer ?=null
 
 }
