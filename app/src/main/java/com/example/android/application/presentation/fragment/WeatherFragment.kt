@@ -1,6 +1,6 @@
 package com.example.android.application.presentation.fragment
 
-import android.app.Application
+//import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
