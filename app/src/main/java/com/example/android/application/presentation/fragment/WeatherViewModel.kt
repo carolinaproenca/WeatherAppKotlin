@@ -4,18 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android.application.common.WeatherApi
 import com.example.android.application.domain.model.Day
 import com.example.android.application.data.remote.dto.WeatherState
-import com.example.android.application.data.remote.WeatherApi
+import com.example.android.application.data.repository.WeatherRepository
 import com.example.android.application.domain.use_case.GetDayUseCase
 import com.github.mikephil.charting.data.Entry
 
 import kotlinx.coroutines.launch
 import kotlin.collections.ArrayList
 
-class WeatherViewModel : ViewModel(){
+class WeatherViewModel(repository: WeatherRepository) : ViewModel(){
 
     private val retrofit = WeatherApi.retrofitService
+    //private val repository = WeatherRepository(retrofit)
 
     private val _response= MutableLiveData<WeatherState>()
     val response: LiveData<WeatherState>
@@ -23,7 +25,7 @@ class WeatherViewModel : ViewModel(){
 
     val smsError = MutableLiveData<String>()
 
-    private var day = GetDayUseCase()
+    private var day = GetDayUseCase(repository)
     private var linelist = ArrayList<Entry>()
     private var days = mutableListOf<Day>()
 

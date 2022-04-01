@@ -1,13 +1,11 @@
 package com.example.android.application.presentation.fragment
 
-//import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.android.application.AppContainer
 import com.example.android.application.R
 import com.example.android.application.WeatherApplication
@@ -18,8 +16,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 
-
-abstract class WeatherFragment : Fragment(){
+class WeatherFragment : Fragment(){
 
     private lateinit var binding: WeatherFragmentBinding
     private lateinit var model : WeatherViewModel
@@ -29,7 +26,6 @@ abstract class WeatherFragment : Fragment(){
     private lateinit var lineDataSet : LineDataSet
     private lateinit var lineData : LineData
 
-    //abstract val application : Application
     private lateinit var appContainer: AppContainer
 
     override fun onCreateView(
@@ -40,10 +36,11 @@ abstract class WeatherFragment : Fragment(){
 
         binding = WeatherFragmentBinding.inflate(inflater, container, false)
 
-        appContainer = (application as WeatherApplication).appContainer
+        appContainer = (activity?.application as WeatherApplication).appContainer
         appContainer.weatherContainer = WeatherContainer(appContainer.repository)
 
-        model = ViewModelProvider(this).get(WeatherViewModel::class.java)
+       // model = ViewModelProvider(this).get(WeatherViewModel::class.java)
+        model = WeatherViewModel(appContainer.repository)
 
         binding.day1weather.adapter = adapter
 

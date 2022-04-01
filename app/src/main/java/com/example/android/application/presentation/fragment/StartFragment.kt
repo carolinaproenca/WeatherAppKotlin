@@ -9,7 +9,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.application.R
 import com.example.android.application.databinding.StartFragmentBinding
 
-
 class StartFragment : Fragment() {
 
     private lateinit var binding: StartFragmentBinding
