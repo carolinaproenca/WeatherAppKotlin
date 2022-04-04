@@ -43,7 +43,7 @@ class GetDayUseCase constructor(private val repository: WeatherRepository){
             if (firstday) {
                 linelist.add(
                     Entry(
-                        getData(hour[i].dtTxt)!!.toFloat(),
+                        gethour(hour[i].dtTxt)!!.toFloat(),
                         hour[i].main.temp.toFloat()
                     )
                 )
@@ -57,6 +57,13 @@ class GetDayUseCase constructor(private val repository: WeatherRepository){
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
         val date = format.parse(stringdate)
         return date?.date
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun gethour(stringdate: String): Int? {
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        val date = format.parse(stringdate)
+        return date?.hours
     }
 
     @SuppressLint("SimpleDateFormat")
