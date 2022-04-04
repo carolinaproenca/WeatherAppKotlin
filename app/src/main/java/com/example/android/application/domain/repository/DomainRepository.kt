@@ -1,8 +1,8 @@
 package com.example.android.application.domain.repository
 
-/*import com.example.android.application.data.remote.dto.Response
+import com.example.android.application.data.remote.dto.Response
 
 
-interface domainRepository {
+interface DomainRepository {
     suspend fun getProp() : Response
-}*/
+}

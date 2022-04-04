@@ -2,13 +2,13 @@ package com.example.android.application.domain.use_case
 
 import android.annotation.SuppressLint
 import com.example.android.application.data.remote.dto.Hour
-import com.example.android.application.data.repository.WeatherRepository
 import com.example.android.application.domain.model.Day
+import com.example.android.application.domain.repository.DomainRepository
 import com.github.mikephil.charting.data.Entry
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GetDayUseCase constructor(private val repository: WeatherRepository){
+class GetDayUseCase constructor(private val repository: DomainRepository){
 
     suspend fun getProp() = repository.getProp()
 
